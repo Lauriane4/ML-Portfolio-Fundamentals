@@ -1,4 +1,4 @@
-# Analyse Comparative des Prix Immobiliers en Californie (Régression ML)
+# Analyse comparative des prix immobiliers en californie (Régression ML)
 
 ## Aperçu du Projet
 Ce projet de Machine Learning a pour objectif de prédire la valeur médiane des maisons dans différents districts de la Californie en utilisant un jeu de données standard. L'analyse se concentre sur la **comparaison de la performance** entre un modèle linéaire simple et un modèle non linéaire complexe.
