@@ -39,3 +39,22 @@ cd ML-Regression-Comparaison
 
 # 2. Installer les librairies (Pandas, Scikit-learn, etc.)
 pip install -r requirements.txt
+
+```
+## Exécution de l'analyse 
+
+L'analyse complète est disponible dans le notebook Jupyter : 
+```bash 
+jupyter notebook Jupyter_Notebooks/regression_comparison.ipynb 
+```
+## 🛠️ Technologies
+Langage : Python
+
+Machine Learning : scikit-learn
+
+Analyse/Manipulation : pandas, numpy
+
+Visualisation : matplotlib
+
+## 📄 Licence
+Ce projet est sous licence Apache 2.0.
