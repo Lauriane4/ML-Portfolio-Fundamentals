@@ -1,4 +1,7 @@
-# Analyse comparative des prix immobiliers en Californie (Régression ML)
+# Portfolio de fondamentaux en Machine Learning 
+🎯 Aperçu du Dépôt
+
+# Projet 1 : Analyse comparative des prix immobiliers en Californie (Régression ML)
 
 ## Aperçu du Projet
 Ce projet de Machine Learning a pour objectif de prédire la valeur médiane des maisons dans différents districts de la Californie en utilisant un jeu de données standard. L'analyse se concentre sur la **comparaison de la performance** entre un modèle linéaire simple et un modèle non linéaire complexe.
@@ -23,8 +26,21 @@ Ce projet de Machine Learning a pour objectif de prédire la valeur médiane des
 | **Arbre de Décision** | **`0.6923`** | **`0.4793`** | **`0.6409`** |
 
 
+### Projet 2 : Prédiction de survie des passagers du Titanic (Classification logistique)
+L'objectif est de prédire si un passager a survécu au naufrage du Titanic en fonction de différentes caractéristiques.
 
-## 💻 Installation et Utilisation
+#### Méthodologie et modèle
+
+|Étape|Description|Objectif|
+|**Nettoyage**|Imputation des âges manquants par la médiane.|Gérer les données incomplètes|
+|**Encodage**|Conversion du sexe (male/female) en numérique.|Préparer les données pour le modèle.|
+|**Modèle**|Régression Logistique (LogisticRegression).|Prédire une catégorie binaire (0 ou 1).|
+
+#### Résultats
+|Modèle|Accuracy (Précision globale)|F1-Score (Équilibre)|Statut|
+|**Régression Logistique**|0.8034|0.7586|Modèle validé| 
+
+# 💻 Installation et Utilisation
 
 Ce projet utilise un environnement Python standard.
 
@@ -54,7 +70,7 @@ Machine Learning : scikit-learn
 
 Analyse/Manipulation : pandas, numpy
 
-Visualisation : matplotlib
+Visualisation : matplotlib, seaborn
 
 ## 📄 Licence
 Ce projet est sous licence Apache 2.0.
