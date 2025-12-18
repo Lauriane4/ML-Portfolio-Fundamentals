@@ -107,7 +107,7 @@
     "couvrance": "légère",
     "format": "flacon",
     "gamme_prix": "moyenne",
-    "couleur": ["nude", "rose"],
+    "couleur": ["transparent", "nude", "rose", "orange"],
     "description": "Gloss universel apportant brillance intense et confort.",
     "image": ""
   },

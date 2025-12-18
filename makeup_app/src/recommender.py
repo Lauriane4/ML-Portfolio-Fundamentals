@@ -1,9 +1,10 @@
-def score_product(product, extracted):
+# Scorer un produit unique
+def score_single_product(product, extracted):
     score = 0
 
     # Zone (prioritaire)
     if extracted["zone"] == product["zone"]:
-        score += 2
+        score += 5
 
     # Texture
     score += len(set(extracted["texture"]) & set(product["texture"]))
@@ -14,25 +15,30 @@ def score_product(product, extracted):
     # Occasion
     score += len(set(extracted["occasion"]) & set(product["occasion"]))
 
-    # Couleur (uniquement si le produit en a)
+    # Couleur
     if product["couleur"]:
-        score += len(set(extracted["couleur"]) & set(product["couleur"]))
+        score += 3*len(set(extracted["couleur"]) & set(product["couleur"]))
 
     # Couvrance
     if extracted["couvrance"] == product["couvrance"]:
-        score += 1
+        score += 2
+
+    # Gamme de prix
+    if extracted["gamme_prix"] == product["gamme_prix"]:
+        score += 3
 
     return score
 
-
-def recommend_product(products, extracted):
-    best_product = None
-    best_score = -1
+# Recommender top N
+def recommend_product(products, extracted, top_k=3):
+    scored_products = []
 
     for product in products:
-        score = score_product(product, extracted)
-        if score > best_score:
-            best_score = score
-            best_product = product
+        score = score_single_product(product, extracted)
+        scored_products.append((score, product))
 
-    return best_product, best_score
+    # Trier par score décroissant
+    scored_products.sort(key=lambda x: x[0], reverse=True)
+
+    # Retourner top_k
+    return scored_products[:top_k]

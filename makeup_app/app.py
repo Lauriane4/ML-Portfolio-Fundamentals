@@ -70,22 +70,23 @@ if st.button("Recommander") and user_input.strip():
 # DISPLAY RESULT
 # ----------------------------
 if st.session_state.answered and st.session_state.result:
-    product, score = st.session_state.result
 
     st.subheader("✨ Produit recommandé")
 
-    st.markdown(f"""
-    **{product['nom']}**  
-    *{product['marque']}*  
+    for idx, (score, product) in enumerate(st.session_state.result, 1):
+        st.markdown(f"""
+        **{idx}. {product['nom']}**  
+        *{product['marque']}*  
 
-    **Zone** : {product['zone']}  
-    **Texture** : {", ".join(product['texture'])}  
-    **Finition** : {", ".join(product['finition'])}  
-    **Occasion** : {", ".join(product['occasion'])}  
-    **Couvrance** : {product['couvrance']}  
-    **Couleurs** : {", ".join(product['couleur']) if product['couleur'] else "—"}  
-    **Gamme de prix** : {product['gamme_prix']}
-    """)
+        **Score** : {score}  
+        **Zone** : {product['zone']}  
+        **Texture** : {', '.join(product['texture'])}  
+        **Finition** : {', '.join(product['finition'])}  
+        **Occasion** : {', '.join(product['occasion'])}  
+        **Couvrance** : {product['couvrance']}  
+        **Couleurs** : {', '.join(product['couleur']) if product['couleur'] else '—'}  
+        **Gamme de prix** : {product['gamme_prix']}
+        """)
 
     if st.checkbox("Afficher le debug NLP"):
         st.json(st.session_state.extracted)

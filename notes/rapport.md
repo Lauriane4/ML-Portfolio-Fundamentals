@@ -214,3 +214,117 @@ Les tests unitaires ont permis d’identifier certaines limites de l’approche 
 
 La fonction d’extraction des attributs a été refactorisée afin d’exploiter pleinement les dictionnaires de mots-clés définis pour chaque catégorie. Chaque attribut est détecté à partir d’une liste de synonymes, ce qui permet de mieux prendre en compte la diversité des formulations utilisateur. Les couleurs constituent une exception volontaire, étant traitées comme des mots-clés directs.
 
+
+## 11. Changements et améliorations du système de recommandation
+
+### 11.1 Problème initial
+
+Lors de nos premiers tests, le système de recommandation ne prenait en compte qu’un seul produit à la fois et ne considérait pas certains critères essentiels pour l’utilisateur, comme la **gamme de prix**.  
+
+Exemple avec le prompt : "Je cherche une palette verte et bleue à bas prix"
+
+
+Le système renvoyait les produits suivants :
+
+1. Palette Naked Heat - Urban Decay  
+   Score : 2  
+   Zone : yeux  
+   Texture : poudre  
+   Finition : mat, lumineux  
+   Couleurs : marron, cuivré, doré  
+   Gamme de prix : moyenne  
+
+2. Mini Eyeshadow Palette - Huda Beauty  
+   Score : 2  
+   Zone : yeux  
+   Texture : poudre  
+   Finition : mat, brillant  
+   Couleurs : violet, rose, doré  
+   Gamme de prix : moyenne  
+
+… et ainsi de suite pour 6 produits.  
+
+Problème constaté :  
+
+- Le score était très bas (2) et ne reflétait pas correctement la pertinence par rapport à la description de l’utilisateur (vert et bleu, bas prix).  
+- Les critères de **prix** n’étaient pas pris en compte dans le scoring.  
+- Les recommandations étaient peu pertinentes, et le modèle ne priorisait pas correctement les produits correspondant aux couleurs demandées.
+
+---
+
+### 11.2 Changements apportés
+
+#### a. Ajout de la **gamme de prix** dans le scoring
+
+- Chaque produit dispose désormais d’un attribut `gamme_prix` : `abordable`, `moyenne`, `luxe`.  
+- Le score est augmenté si la gamme de prix correspond à la demande implicite ou explicite de l’utilisateur.  
+- Cela permet de mieux prioriser les produits en fonction du budget.
+
+#### b. Passage à un système **top-N produits**
+
+- Au lieu de renvoyer un seul produit, le recommender retourne désormais les **6 meilleurs produits** triés par score décroissant.  
+- Chaque produit conserve son score pour transparence et debug.
+
+#### c. Séparation du scoring produit et du recommender
+
+- Fonction `score_single_product(product, extracted)` pour scorer un produit individuel.  
+- Fonction `recommend_products(products, extracted, top_k=6)` pour obtenir le top 6 des produits.  
+- Cela évite les erreurs de type `int object is not subscriptable` et rend le code plus clair.
+
+---
+
+#### d. Nouveau scoring pondéré
+
+Le scoring a été modifié pour donner plus de poids aux critères essentiels.
+
+Changements clés :
+
+- Zone : priorité maximale (+5) car c’est le critère principal.
+
+- Couleur : pondération triple (*3) pour bien valoriser les produits correspondant à la couleur demandée.
+
+- Couvrance : pondération intermédiaire (+2).
+
+- Gamme de prix : pondération importante (+3) pour mieux refléter la préférence budget de l’utilisateur.
+
+- Les autres attributs (texture, finition, occasion) sont cumulés normalement (+1 par correspondance).
+
+### 11.3 Résultats après changements
+
+Prompt utilisateur : "Je cherche une palette verte et bleue à bas prix"
+
+
+Nouveau résultat :
+
+1. **Lash Sensational Mascara** - Maybelline  
+   Score : 8  
+   Zone : yeux  
+   Texture : crémeux  
+   Finition : naturel  
+   Occasion : quotidien  
+   Couleurs : noir  
+   Gamme de prix : abordable  
+
+2. **Palette Naked Heat** - Urban Decay  
+   Score : 5  
+   Zone : yeux  
+   Texture : poudre  
+   Finition : mat, lumineux  
+   Occasion : quotidien, soirée  
+   Couleurs : marron, cuivré, doré  
+   Gamme de prix : moyenne  
+
+3. **Mini Eyeshadow Palette** - Huda Beauty  
+   Score : 5  
+   Zone : yeux  
+   Texture : poudre  
+   Finition : mat, brillant  
+   Occasion : soirée  
+   Couleurs : violet, rose, doré  
+   Gamme de prix : moyenne  
+
+> On constate une meilleure adéquation entre le **score** et la pertinence pour l’utilisateur, notamment grâce à la prise en compte de la **gamme de prix** et au système **top-N**.
+
+---
+
+

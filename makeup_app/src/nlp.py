@@ -42,6 +42,12 @@ INTENTION_COUVRANCE = { # Mots-clés associés à chaque niveau de couvrance du 
     "légère": ["léger", "discret", "naturel", "légère couvrance", "couvrance légère", "faible", "couvrance faible"]
 }
 
+GAMME_PRIX = {
+    "abordable": ["économique", "pas cher", "abordable", "budget", "bon marché", "accessible", "raisonnable", "low cost", "discount", "budget-friendly", "bas prix", "petit prix", "pas cher", "cheap", "peu coûteux"],
+    "moyenne": ["moyenne gamme", "prix moyen", "raisonnable", "accessible", "modéré", "standard", "intermédiaire", "mid-range", "mid tier"],
+    "luxe": ["luxe", "haut de gamme", "premium", "cher", "coûteux"]
+}
+
 def clean_text(text):
     text = text.lower()
     text = re.sub(r"[^\w\s]", "", text)
@@ -102,6 +108,12 @@ def extract_attributes(text):
     for couvrance, keywords in INTENTION_COUVRANCE.items():
         if any(word in text for word in keywords):
             extracted["couvrance"] = couvrance
+            break
+    # -----------------------------
+    # Gamme de prix (intention priorisée)
+    for gamme_prix, keywords in GAMME_PRIX.items():
+        if any(word in text for word in keywords):
+            extracted["gamme_prix"] = gamme_prix
             break
 
     return extracted
