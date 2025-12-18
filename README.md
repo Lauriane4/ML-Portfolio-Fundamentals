@@ -1,6 +1,9 @@
-# Analyse comparative des prix immobiliers en Californie (Régression ML)
+# Portfolio de fondamentaux en Machine Learning 
 
-## Aperçu du Projet
+Ce dépôt regroupe des projets clés en Machine Learning, démontrant la maîtrise des techniques de régression (prédiction de valeurs continues) et de classification (prédiction de catégories). L'accent est mis sur le nettoyage des données, l'ingénierie des caractéristiques et l'évaluation  des modèles.
+
+# Projet 1 : Analyse comparative des prix immobiliers en Californie (Régression ML)
+
 Ce projet de Machine Learning a pour objectif de prédire la valeur médiane des maisons dans différents districts de la Californie en utilisant un jeu de données standard. L'analyse se concentre sur la **comparaison de la performance** entre un modèle linéaire simple et un modèle non linéaire complexe.
 
 
@@ -23,10 +26,27 @@ Ce projet de Machine Learning a pour objectif de prédire la valeur médiane des
 | **Arbre de Décision** | **`0.6923`** | **`0.4793`** | **`0.6409`** |
 
 
+# Projet 2 : Prédiction de survie des passagers du Titanic (Classification logistique)
 
-## 💻 Installation et Utilisation
+L'objectif de ce projet est de prédire si un passager a survécu au naufrage du Titanic en fonction de différentes caractéristiques.
 
-Ce projet utilise un environnement Python standard.
+## Méthodologie et modèle
+
+| Étape         | Description                                                 | Objectif                              |
+| ------------- | ----------------------------------------------------------- | ------------------------------------- |
+| **Nettoyage** | Imputation des âges manquants par la médiane.               | Gérer les données incomplètes         |
+| **Encodage**  | Conversion du sexe (*male / female*) en valeurs numériques. | Préparer les données pour le modèle   |
+| **Modèle**    | Régression logistique (*LogisticRegression*).               | Prédire une variable binaire (0 ou 1) |
+
+
+## Résultats
+| Modèle                    | Accuracy (précision globale) | F1-score (équilibre) | Statut        |
+| ------------------------- | ---------------------------- | -------------------- | ------------- |
+| **Régression logistique** | 0.8034                       | 0.7586               | Modèle validé |
+
+# 💻 Installation et Utilisation
+
+Ces projets utilisent un environnement Python standard.
 
 ### Prérequis
 Assurez-vous d'avoir Git et Python 3.x installés.
@@ -34,8 +54,8 @@ Assurez-vous d'avoir Git et Python 3.x installés.
 ### Installation des Dépendances
 ```bash
 # 1. Cloner le dépôt
-git clone https://github.com/Lauriane4/ML-Regression-Comparison.git
-cd ML-Regression-Comparaison
+git clone https://github.com/Lauriane4/ML-Portfolio-Fundamentals.git
+cd ML-Portfolio-Fundamentals
 
 # 2. Installer les librairies (Pandas, Scikit-learn, etc.)
 pip install -r requirements.txt
@@ -45,7 +65,7 @@ pip install -r requirements.txt
 
 L'analyse complète est disponible dans le notebook Jupyter : 
 ```bash 
-jupyter notebook Jupyter_Notebooks/regression_comparison.ipynb 
+jupyter notebook Jupyter_Notebooks/nom-du-fichier.ipynb 
 ```
 ## 🛠️ Technologies
 Langage : Python
@@ -54,7 +74,7 @@ Machine Learning : scikit-learn
 
 Analyse/Manipulation : pandas, numpy
 
-Visualisation : matplotlib
+Visualisation : matplotlib, seaborn
 
 ## 📄 Licence
 Ce projet est sous licence Apache 2.0.
