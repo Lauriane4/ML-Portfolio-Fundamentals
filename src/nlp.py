@@ -2,15 +2,31 @@ import re
 
 #Dictionnaire de mots-clés pour le maquillage
 ZONES = {
-    "visage": ["visage", "teint", "fond de teint", "base"],
-    "lèvres": ["lèvres", "rouge à lèvres", "gloss"],
-    "joues": ["joues", "blush"],
-    "yeux": ["yeux", "paupières", "fards", "palette"]
+    "visage": ["visage", "teint", "fond de teint", "base", "bb crème", "cc crème"],
+    "lèvres": ["lèvres", "rouge à lèvres", "gloss", "lipstick", "lip", "lip gloss", "lip balm"],
+    "joues": ["joues", "blush", "fard à joues", "highlighter", "illuminateur", "contour", "bronzer", "sculpter", "contouring"],
+    "yeux": ["yeux", "paupières", "fards", "palette", "eyeliner", "mascara", "cils", "sourcils", "brows", "ombre à paupières", "eyeshadow"]
 }
 
-TEXTURES = ["crémeux", "liquide", "poudre"]
-FINITIONS = ["mat", "brillant", "lumineux"]
-OCCASIONS = ["quotidien", "soirée", "professionnel", "mariage"]
+TEXTURES = {
+    "liquide": ["liquide", "fluide"],
+    "crémeux": ["crémeux", "crème"],
+    "poudre": ["poudre", "compact", "minérale"],
+    "gel": ["gel", "gélifié"],
+}
+
+FINITION = {
+    "mat": ["mat", "mate", "sans brillance", "velouté", "veloutée"],
+    "brillant": ["brillant", "glossy", "lustré", "lustrée", "shiny", "scintillant", "scintillante", "irisé", "irisée","satiné", "satinée"],
+    "lumineux": ["lumineux", "éclat", "glowy", "radieux", "radieuse", "illuminé", "illuminée", "glow"]
+}
+
+OCCASION = {
+    "mariage": ["mariage", "noces", "cérémonie", "bridal", "wedding"],
+    "professionnel": ["travail", "professionnel", "bureau", "réunion", "interview", "job"],
+    "soirée": ["soirée", "nuit", "fête", "party", "événement"],
+    "quotidien": ["quotidien", "tous les jours", "décontracté", "casual", "everyday"]
+}
 
 COULEURS = [
     "rouge", "rose", "nude", "bordeaux", "corail",
@@ -22,6 +38,7 @@ INTENTION_COUVRANCE = { # Mots-clés associés à chaque niveau de couvrance du 
     "moyenne": ["uniforme", "équilibré", "moyenne couvrance", "couvrance moyenne", "modérée", "couvrance modérée", "couvrance normale", "normale", "standard", "couvrance standard"],
     "légère": ["léger", "discret", "naturel", "légère couvrance", "couvrance légère", "faible", "couvrance faible"]
 }
+
 def clean_text(text):
     text = text.lower()
     text = re.sub(r"[^\w\s]", "", text)
@@ -40,33 +57,45 @@ def extract_attributes(text):
         "couvrance": None
     }
 
-    # Zone du visage
+    # -----------------------------
+    # Zone du visage (une seule)
+    # -----------------------------
     for zone, keywords in ZONES.items():
         if any(word in text for word in keywords):
             extracted["zone"] = zone
             break
 
-    # Textures
-    for texture in TEXTURES:
-        if texture in text:
+    # -----------------------------
+    # Textures (plusieurs possibles)
+    # -----------------------------
+    for texture, keywords in TEXTURES.items():
+        if any(word in text for word in keywords):
             extracted["texture"].append(texture)
 
-    # Finitions
-    for finition in FINITIONS:
-        if finition in text:
+    # -----------------------------
+    # Finition (plusieurs possibles)
+    # -----------------------------
+    for finition, keywords in FINITION.items():
+        if any(word in text for word in keywords):
             extracted["finition"].append(finition)
 
-    # Occasions
-    for occasion in OCCASIONS:
-        if occasion in text:
+    # -----------------------------
+    # Occasion (plusieurs possibles)
+    # -----------------------------
+    for occasion, keywords in OCCASION.items():
+        if any(word in text for word in keywords):
             extracted["occasion"].append(occasion)
 
-    # Couleurs
+    # -----------------------------
+    # Couleurs (liste simple)
+    # -----------------------------
     for couleur in COULEURS:
         if couleur in text:
             extracted["couleur"].append(couleur)
 
-    # Couvrance (via intention)
+    # -----------------------------
+    # Couvrance (intention priorisée)
+    # -----------------------------
     for couvrance, keywords in INTENTION_COUVRANCE.items():
         if any(word in text for word in keywords):
             extracted["couvrance"] = couvrance

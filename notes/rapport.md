@@ -211,3 +211,6 @@ La mise en place d’une baseline NLP rule-based associée à un système de rec
 J'ai ajouté un premier lot de tests unitaires simples pour valider mon modèle.
 
 Les tests unitaires ont permis d’identifier certaines limites de l’approche rule-based, notamment dans l’interprétation de la couvrance. Un premier ensemble de règles ne permettait pas de détecter explicitement des formulations telles que « couvrance forte ». L’ajout de mots-clés supplémentaires a permis d’améliorer la robustesse du système face à des variations linguistiques tout en conservant une approche interprétable.
+
+La fonction d’extraction des attributs a été refactorisée afin d’exploiter pleinement les dictionnaires de mots-clés définis pour chaque catégorie. Chaque attribut est détecté à partir d’une liste de synonymes, ce qui permet de mieux prendre en compte la diversité des formulations utilisateur. Les couleurs constituent une exception volontaire, étant traitées comme des mots-clés directs.
+
