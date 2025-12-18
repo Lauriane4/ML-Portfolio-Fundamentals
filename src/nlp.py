@@ -17,12 +17,11 @@ COULEURS = [
     "marron", "doré", "cuivré", "violet", "transparent", "pêche"
 ]
 
-INTENTION_COUVRANCE = {
-    "légère": ["léger", "discret", "naturel"],
-    "moyenne": ["uniforme", "équilibré"],
-    "forte": ["camoufler", "opaque", "couvrant"]
+INTENTION_COUVRANCE = { # Mots-clés associés à chaque niveau de couvrance du plus fort au plus léger
+    "forte": ["camoufler", "opaque", "couvrant", "très couvrant", "forte couvrance", "haute couvrance", "couvrance maximale", "couvrance forte"],
+    "moyenne": ["uniforme", "équilibré", "moyenne couvrance", "couvrance moyenne", "modérée", "couvrance modérée", "couvrance normale", "normale", "standard", "couvrance standard"],
+    "légère": ["léger", "discret", "naturel", "légère couvrance", "couvrance légère", "faible", "couvrance faible"]
 }
-
 def clean_text(text):
     text = text.lower()
     text = re.sub(r"[^\w\s]", "", text)

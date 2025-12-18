@@ -39,3 +39,25 @@ def test_extract_multiple_attributes():
     assert "liquide" in extracted["texture"]
     assert "rouge" in extracted["couleur"]
     assert "soirée" in extracted["occasion"]
+
+def test_detect_couvrance_forte():
+    text = "je veux une couvrance forte"
+    extracted = extract_attributes(text)
+    assert extracted["couvrance"] == "forte"
+
+def test_detect_couvrance_legere():
+    text = "effet naturel et discret"
+    extracted = extract_attributes(text)
+    assert extracted["couvrance"] == "légère"
+
+def test_detect_couvrance_moyenne():
+    text = "couvrance moyenne pour un effet équilibré"
+    extracted = extract_attributes(text)
+    assert extracted["couvrance"] == "moyenne"
+
+
+def test_mixed_coouvrance_keywords():
+    text = "Je veux un fond de teint avec couvrance moyenne mais très couvrant"
+    extracted = extract_attributes(text)
+    assert extracted["couvrance"] == "forte"
+

@@ -205,3 +205,9 @@ Cette solution est envisagée comme une amélioration future du projet.
 ## 10. Conclusion intermédiaire
 
 La mise en place d’une baseline NLP rule-based associée à un système de recommandation par scoring constitue une première version fonctionnelle, compréhensible et évolutive du système. Elle permet de valider la structure des données, la logique de recommandation et le comportement global de l’application avant l’intégration de modèles plus complexes.
+
+## Tests unitaires
+
+J'ai ajouté un premier lot de tests unitaires simples pour valider mon modèle.
+
+Les tests unitaires ont permis d’identifier certaines limites de l’approche rule-based, notamment dans l’interprétation de la couvrance. Un premier ensemble de règles ne permettait pas de détecter explicitement des formulations telles que « couvrance forte ». L’ajout de mots-clés supplémentaires a permis d’améliorer la robustesse du système face à des variations linguistiques tout en conservant une approche interprétable.
