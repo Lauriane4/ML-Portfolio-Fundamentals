@@ -1,13 +1,16 @@
-from src.recommender import score_product, recommend_product
+# tests/test_recommender.py
+import pytest
+from src.recommender import score_single_product, recommend_product
 
-def test_score_product_match():
+def test_score_single_product_match():
     product = {
         "zone": "lèvres",
         "texture": ["crémeux"],
         "finition": ["mat"],
         "occasion": ["soirée"],
         "couvrance": "forte",
-        "couleur": ["rouge"]
+        "couleur": ["rouge"],
+        "gamme_prix": "luxe"
     }
 
     extracted = {
@@ -16,15 +19,15 @@ def test_score_product_match():
         "finition": ["mat"],
         "occasion": ["soirée"],
         "couvrance": "forte",
-        "couleur": ["rouge"]
+        "couleur": ["rouge"],
+        "gamme_prix": "luxe"
     }
 
-    score = score_product(product, extracted)
-
+    score = score_single_product(product, extracted)
     assert score > 0
+    assert score >= 10  # Vérifie que la pondération a été appliquée
 
-
-def test_recommend_product():
+def test_recommend_products_top6():
     products = [
         {
             "nom": "Produit A",
@@ -33,7 +36,8 @@ def test_recommend_product():
             "finition": ["mat"],
             "occasion": ["quotidien"],
             "couvrance": "moyenne",
-            "couleur": []
+            "couleur": [],
+            "gamme_prix": "moyenne"
         },
         {
             "nom": "Produit B",
@@ -42,7 +46,18 @@ def test_recommend_product():
             "finition": ["mat"],
             "occasion": ["soirée"],
             "couvrance": "forte",
-            "couleur": ["rouge"]
+            "couleur": ["rouge"],
+            "gamme_prix": "luxe"
+        },
+        {
+            "nom": "Produit C",
+            "zone": "lèvres",
+            "texture": ["liquide"],
+            "finition": ["brillant"],
+            "occasion": ["quotidien"],
+            "couvrance": "légère",
+            "couleur": ["rose"],
+            "gamme_prix": "abordable"
         }
     ]
 
@@ -52,9 +67,12 @@ def test_recommend_product():
         "finition": ["mat"],
         "occasion": ["soirée"],
         "couvrance": "forte",
-        "couleur": ["rouge"]
+        "couleur": ["rouge"],
+        "gamme_prix": "luxe"
     }
 
-    product, score = recommend_product(products, extracted)
+    top_products = recommend_product(products, extracted, top_k=2)
 
-    assert product["nom"] == "Produit B"
+    assert isinstance(top_products, list)
+    assert isinstance(top_products[0], tuple)  # chaque élément = (score, produit)
+    assert top_products[0][1]["nom"] == "Produit B"  # Produit B devrait être le mieux noté

@@ -61,3 +61,22 @@ def test_mixed_coouvrance_keywords():
     extracted = extract_attributes(text)
     assert extracted["couvrance"] == "forte"
 
+def test_gamme_prix_abordable():
+    text = "Je cherche un produit pas cher et économique"
+    extracted = extract_attributes(text)
+    assert extracted["gamme_prix"] == "abordable"
+
+def test_gamme_prix_luxe():
+    text = "Je veux un produit de luxe et haut de gamme"
+    extracted = extract_attributes(text)
+    assert extracted["gamme_prix"] == "luxe"
+
+def test_gamme_prix_moyenne():
+    text = "Je cherche un produit de prix moyen et modéré."
+    extracted = extract_attributes(text)
+    assert extracted["gamme_prix"] == "moyenne"
+
+def test_no_gamme_prix():
+    text = "Je veux un rouge à lèvres rouge mat"
+    extracted = extract_attributes(text)
+    assert extracted["gamme_prix"] is None

@@ -63,7 +63,8 @@ def extract_attributes(text):
         "finition": [],
         "occasion": [],
         "couleur": [],
-        "couvrance": None
+        "couvrance": None,
+        "gamme_prix": None
     }
 
     # -----------------------------
