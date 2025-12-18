@@ -30,7 +30,10 @@ OCCASION = {
 
 COULEURS = [
     "rouge", "rose", "nude", "bordeaux", "corail",
-    "marron", "doré", "cuivré", "violet", "transparent", "pêche"
+    "marron", "doré", "cuivré", "violet", "transparent", "pêche", "mauve",
+    "framboise", "prune", "abricot", "fuchsia", "magenta", "cerise", "grenat",
+    "saumon", "terracotta", "champagne", "bronze", "argenté", "platine", "bleu",
+    "vert", "turquoise", "émeraude", "jaune", "orange", "lavande", "indigo","vert", "noir","blanc", "gris"
 ]
 
 INTENTION_COUVRANCE = { # Mots-clés associés à chaque niveau de couvrance du plus fort au plus léger
