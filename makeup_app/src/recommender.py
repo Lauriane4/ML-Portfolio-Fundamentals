@@ -6,6 +6,10 @@ def score_single_product(product, extracted):
     if extracted["zone"] == product["zone"]:
         score += 5
 
+    # Type de produit (prioritaire)
+    if extracted["type"] == product["type"]:
+        score += 5
+
     # Texture
     score += len(set(extracted["texture"]) & set(product["texture"]))
 

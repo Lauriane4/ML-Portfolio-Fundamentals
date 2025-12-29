@@ -8,6 +8,21 @@ ZONES = {
     "yeux": ["yeux", "paupières", "fards", "palette", "eyeliner", "mascara", "cils", "sourcils", "brows", "ombre à paupières", "eyeshadow"]
 }
 
+TYPES = {
+    "fond de teint": ["fond de teint", "base", "bb crème", "cc crème"],
+    "rouge à lèvres": ["rouge à lèvres", "lipstick", "RAL"],
+    "gloss": ["gloss", "lip gloss"],
+    "blush": ["blush", "fard à joues"],
+    "highlighter": ["highlighter", "illuminateur"],
+    "eyeliner": ["eyeliner", "crayon yeux"],
+    "mascara": ["mascara", "cils"],
+    "palette": ["palette", "fards à paupières", "eyeshadow palette", "eye shadow"],
+    "sourcils": ["sourcils", "brows", "crayon sourcils"],
+    "bronzer": ["bronzer", "poudre bronzante"],
+    "base": ["base", "primer"],
+    "spray fixant": ["spray fixant", "fixateur de maquillage"]
+}
+
 TEXTURES = {
     "liquide": ["liquide", "fluide"],
     "crémeux": ["crémeux", "crème"],
@@ -68,6 +83,7 @@ def extract_attributes(text):
 
     extracted = {
         "zone": None,
+        "type": None,
         "texture": [],
         "finition": [],
         "occasion": [],
@@ -82,6 +98,14 @@ def extract_attributes(text):
     for zone, keywords in ZONES.items():
         if any(word in text for word in keywords):
             extracted["zone"] = zone
+            break
+
+    # -----------------------------
+    # Type de produit (un seul)
+    # -----------------------------
+    for type_produit, keywords in TYPES.items():
+        if any(word in text for word in keywords):
+            extracted["type"] = type_produit
             break
 
     # -----------------------------

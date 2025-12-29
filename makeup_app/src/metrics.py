@@ -70,7 +70,7 @@ test_data = [
 
     ("Je cherche un spray fixant léger, fini lumineux, pour un maquillage frais au quotidien.", 29),
 
-    ("Je veux un rouge à lèvres crémeux à finition satinée, couvrance moyenne, pour le quotidien.", 30),
+    ("Je veux un mascara volumisant, très couvrant, pour un effet dramatique au quotidien ou en soirée.", 30),
 
     ("Je cherche un fond de teint mat à très forte couvrance, idéal pour une soirée, en gamme luxe.", 31),
 
