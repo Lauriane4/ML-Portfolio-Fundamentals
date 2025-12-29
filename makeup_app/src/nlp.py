@@ -43,9 +43,18 @@ INTENTION_COUVRANCE = { # Mots-clés associés à chaque niveau de couvrance du 
 }
 
 GAMME_PRIX = {
-    "abordable": ["économique", "pas cher", "abordable", "budget", "bon marché", "accessible", "raisonnable", "low cost", "discount", "budget-friendly", "bas prix", "petit prix", "pas cher", "cheap", "peu coûteux"],
-    "moyenne": ["moyenne gamme", "prix moyen", "raisonnable", "accessible", "modéré", "standard", "intermédiaire", "mid-range", "mid tier"],
-    "luxe": ["luxe", "haut de gamme", "premium", "cher", "coûteux"]
+    "abordable": [
+        "pas cher", "bas prix", "petit prix", "cheap",
+        "bon marché", "low cost", "discount",
+        "budget", "budget-friendly", "peu coûteux", "économique"
+    ],
+    "moyenne": [
+        "prix moyen", "milieu de gamme", "intermédiaire",
+        "modéré", "standard", "mid-range", "mid tier"
+    ],
+    "luxe": [
+        "luxe", "haut de gamme", "premium", "très cher"
+    ]
 }
 
 def clean_text(text):
