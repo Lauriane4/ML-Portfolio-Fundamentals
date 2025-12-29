@@ -338,4 +338,8 @@ L’accuracy (0,60) suggère que le modèle prédit correctement le produit dans
 
 Pour évaluer correctement un système de recommandation, il est préférable d’utiliser des métriques adaptées au ranking, telles que Top-K Accuracy, Mean Reciprocal Rank (MRR), Precision@K et Recall@K, qui mesurent la position et la pertinence du produit recommandé parmi les K meilleures suggestions.
 
+### 12.2 Améliorations
 
+En modifiant metrics.py, nous avons recentré l’évaluation sur des métriques adaptées aux systèmes de recommandation plutôt qu’aux mesures classiques de classification. Le Top-1 Accuracy de 0,60 indique que le produit exact est recommandé en première position dans 60 % des cas, tandis que le Top-K Accuracy de 0,93 montre que la quasi-totalité des produits pertinents apparaît parmi les K premières suggestions. Le MRR de 0,80 et le Mean Rank de 1,54 confirment que les recommandations pertinentes sont généralement placées en haut du classement, fournissant une évaluation plus représentative de la performance du modèle et de la qualité de l’expérience utilisateur.
+
+---

@@ -4,8 +4,10 @@ from .nlp import extract_attributes
 from .recommender import recommend_product
 import json
 
+
 # Charger les données des produits
 with open("makeup_app/data/makeup_dataset.json", "r", encoding="utf-8") as f:
+
     PRODUCTS = json.load(f)
 
 # Données de test : liste de tuples (description, true_product_id)
@@ -91,74 +93,68 @@ test_data = [
     ("Je veux une palette de fards colorée, très pigmentée, pour des looks fun au quotidien et en soirée.", 40)
 ]
 
-def evaluate_model(test_data, products, top_k=1):
-    """
-    Évalue le modèle de recommandation sur les données de test.
-    Pour chaque description, recommande le top produit et compare au vrai produit.
-    Retourne les vraies étiquettes et les prédictions pour calcul des métriques.
-    """
-    y_true = []
-    y_pred = []
+# -----------------------------
+# Évaluation Ranking
+# -----------------------------
+def evaluate_ranking(test_data, products, top_k=5):
+    ranks = []
+    hits_at_1 = 0
+    hits_at_k = 0
 
-    for description, true_id in test_data:
-        extracted = extract_attributes(description)
+    for text, true_id in test_data:
+        extracted = extract_attributes(text)
         recommendations = recommend_product(products, extracted, top_k=top_k)
-        if recommendations:
-            pred_id = recommendations[0][1]['id']  # ID du produit recommandé (top 1)
+
+        recommended_ids = [prod["id"] for _, prod in recommendations]
+
+        if true_id in recommended_ids:
+            rank = recommended_ids.index(true_id) + 1
+            ranks.append(rank)
+
+            if rank == 1:
+                hits_at_1 += 1
+            hits_at_k += 1
         else:
-            pred_id = None  # Aucun recommandé
+            ranks.append(None)
 
-        y_true.append(true_id)
-        y_pred.append(pred_id)
+    return ranks, hits_at_1, hits_at_k
 
-    return y_true, y_pred
 
-def compute_metrics(y_true, y_pred):
-    """
-    Calcule les métriques : accuracy, precision, recall, F1, et matrice de confusion.
-    """
-    # Filtrer les None si nécessaire, mais pour simplicité, assumons toujours une prédiction
-    y_pred = [p if p is not None else -1 for p in y_pred]  # -1 pour aucun
+# -----------------------------
+# Métriques Ranking
+# -----------------------------
+def compute_ranking_metrics(ranks, hits_at_1, hits_at_k, total):
+    valid_ranks = [r for r in ranks if r is not None]
 
-    # Accuracy
-    accuracy = accuracy_score(y_true, y_pred)
+    top1_accuracy = hits_at_1 / total
+    topk_accuracy = hits_at_k / total
 
-    # Precision, Recall, F1-Score 
-    precision = precision_score(y_true, y_pred, average='macro', zero_division=0)
-    recall = recall_score(y_true, y_pred, average='macro', zero_division=0)
-    f1 = f1_score(y_true, y_pred, average='macro', zero_division=0)
-
-    # Matrice de confusion
-    cm = confusion_matrix(y_true, y_pred)
-
-    # Rapport de classification
-    report = classification_report(y_true, y_pred, zero_division=0)
+    mrr = np.mean([1 / r for r in valid_ranks]) if valid_ranks else 0
+    mean_rank = np.mean(valid_ranks) if valid_ranks else None
 
     return {
-        'accuracy': accuracy,
-        'precision': precision,
-        'recall': recall,
-        'f1_score': f1,
-        'confusion_matrix': cm,
-        'classification_report': report
+        "top1_accuracy": top1_accuracy,
+        "topk_accuracy": topk_accuracy,
+        "mrr": mrr,
+        "mean_rank": mean_rank
     }
 
-def display_metrics(metrics):
-    """
-    Affiche les métriques de manière lisible.
-    """
-    print("=== Évaluation du Modèle de Recommandation ===\n")
-    print(f"Accuracy: {metrics['accuracy']:.4f}")
-    print(f"Precision (macro): {metrics['precision']:.4f}")
-    print(f"Recall (macro): {metrics['recall']:.4f}")
-    print(f"F1-Score (macro): {metrics['f1_score']:.4f}")
-    print("\nMatrice de Confusion:")
-    print(metrics['confusion_matrix'])
-    print("\nRapport de Classification:")
-    print(metrics['classification_report'])
 
+# -----------------------------
+# Affichage
+# -----------------------------
+def display_metrics(metrics):
+    print("\n=== Évaluation du Système de Recommandation ===\n")
+    print(f"Top-1 Accuracy : {metrics['top1_accuracy']:.2f}")
+    print(f"Top-K Accuracy (K=5): {metrics['topk_accuracy']:.2f}")
+    print(f"MRR            : {metrics['mrr']:.2f}")
+    print(f"Mean Rank     : {metrics['mean_rank']:.2f}")
+
+
+# -----------------------------
+# Main
+# -----------------------------
 if __name__ == "__main__":
-    # Évaluer le modèle
-    y_true, y_pred = evaluate_model(test_data, PRODUCTS, top_k=1)
-    metrics = compute_metrics(y_true, y_pred)
+    ranks, hits1, hitsk = evaluate_ranking(test_data, PRODUCTS, top_k=5)
+    metrics = compute_ranking_metrics(ranks, hits1, hitsk, total=len(test_data))
     display_metrics(metrics)
