@@ -327,4 +327,15 @@ Nouveau résultat :
 
 ---
 
+## 12. Evaluation du modèle
+### 12.1 Création de metrics.py
+
+- Analyse critique des métriques utilisées pour l’évaluation du modèle de recommandation
+
+Lors de l’évaluation de notre modèle de recommandation de produits cosmétiques, des métriques classiques de classification (accuracy, précision, rappel, F1-score, matrice de confusion) ont été calculées. Bien qu’elles soient techniquement correctes, elles ne sont pas entièrement adaptées à notre problématique.
+
+L’accuracy (0,60) suggère que le modèle prédit correctement le produit dans 60 % des cas, mais avec 40 classes et un seul exemple par produit, cette mesure devient statistiquement peu fiable. De même, la précision, le rappel et le F1-score (macro) montrent des valeurs faibles et incohérentes, car le modèle réussit parfois à prédire certaines classes tout en échouant pour d’autres. La matrice de confusion 40×40, majoritairement constituée de zéros, confirme que l’approche multi-classes artificielle ne reflète pas la nature du problème, qui est plutôt un ranking ou un matching.
+
+Pour évaluer correctement un système de recommandation, il est préférable d’utiliser des métriques adaptées au ranking, telles que Top-K Accuracy, Mean Reciprocal Rank (MRR), Precision@K et Recall@K, qui mesurent la position et la pertinence du produit recommandé parmi les K meilleures suggestions.
+
 
