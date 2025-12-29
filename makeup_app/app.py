@@ -21,7 +21,7 @@ st.write(
 # ----------------------------
 # LOAD DATA
 # ----------------------------
-with open("data/makeup_dataset.json", "r", encoding="utf-8") as f:
+with open("makeup_app/data/makeup_dataset.json", "r", encoding="utf-8") as f:
     PRODUCTS = json.load(f)
 
 # ----------------------------
