@@ -15,9 +15,9 @@ TYPES = {
     "blush": ["blush", "fard à joues"],
     "highlighter": ["highlighter", "illuminateur"],
     "eyeliner": ["eyeliner", "crayon yeux"],
-    "mascara": ["mascara", "cils"],
+    "mascara": ["mascara"],
     "palette": ["palette", "fards à paupières", "eyeshadow palette", "eye shadow"],
-    "sourcils": ["sourcils", "brows", "crayon sourcils"],
+    "sourcils": ["sourcils", "brows", "crayon sourcils","crayon à sourcils"],
     "bronzer": ["bronzer", "poudre bronzante"],
     "base": ["base", "primer"],
     "spray fixant": ["spray fixant", "fixateur de maquillage"]

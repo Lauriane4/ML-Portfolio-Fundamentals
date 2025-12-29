@@ -80,3 +80,31 @@ def test_no_gamme_prix():
     text = "Je veux un rouge à lèvres rouge mat"
     extracted = extract_attributes(text)
     assert extracted["gamme_prix"] is None
+
+def test_extract_type_produit():
+    text = "Je cherche un fond de teint liquide"
+    text2 = "Je veux un rouge à lèvres mat"
+    text3 = "Je souhaite un mascara volumisant"
+    text4 = "Je désire un eyeliner liquide"
+    text5 = "Je veux un blush poudre lumineux"
+    text6 = "Je cherche un crayon à sourcils fin"
+    text7 = "Je souhaite une palette de fards colorée"
+    text8 = "Je désire un spray fixant léger"
+
+    extracted = extract_attributes(text)
+    extracted2 = extract_attributes(text2)
+    extracted3 = extract_attributes(text3)
+    extracted4 = extract_attributes(text4)  
+    extracted5 = extract_attributes(text5)
+    extracted6 = extract_attributes(text6)
+    extracted7 = extract_attributes(text7)
+    extracted8 = extract_attributes(text8)
+
+    assert extracted["type"] == "fond de teint"
+    assert extracted2["type"] == "rouge à lèvres"
+    assert extracted3["type"] == "mascara"
+    assert extracted4["type"] == "eyeliner"
+    assert extracted5["type"] == "blush"
+    assert extracted6["type"] == "sourcils"
+    assert extracted7["type"] == "palette"
+    assert extracted8["type"] == "spray fixant"

@@ -3,6 +3,7 @@ from src.recommender import score_single_product, recommend_product
 def test_score_single_product_match():
     product = {
         "zone": "lèvres",
+        "type": "rouge à lèvres",
         "texture": ["crémeux"],
         "finition": ["mat"],
         "occasion": ["soirée"],
@@ -13,6 +14,7 @@ def test_score_single_product_match():
 
     extracted = {
         "zone": "lèvres",
+        "type": "rouge à lèvres",
         "texture": ["crémeux"],
         "finition": ["mat"],
         "occasion": ["soirée"],
@@ -30,6 +32,7 @@ def test_recommend_products_top6():
         {
             "nom": "Produit A",
             "zone": "visage",
+            "type": "fond de teint",
             "texture": ["liquide"],
             "finition": ["mat"],
             "occasion": ["quotidien"],
@@ -40,6 +43,7 @@ def test_recommend_products_top6():
         {
             "nom": "Produit B",
             "zone": "lèvres",
+            "type": "rouge à lèvres",
             "texture": ["crémeux"],
             "finition": ["mat"],
             "occasion": ["soirée"],
@@ -50,6 +54,7 @@ def test_recommend_products_top6():
         {
             "nom": "Produit C",
             "zone": "lèvres",
+            "type": "rouge à lèvres",
             "texture": ["liquide"],
             "finition": ["brillant"],
             "occasion": ["quotidien"],
@@ -61,6 +66,7 @@ def test_recommend_products_top6():
 
     extracted = {
         "zone": "lèvres",
+        "type": "rouge à lèvres",
         "texture": ["crémeux"],
         "finition": ["mat"],
         "occasion": ["soirée"],
