@@ -1,5 +1,3 @@
-# tests/test_recommender.py
-import pytest
 from src.recommender import score_single_product, recommend_product
 
 def test_score_single_product_match():
